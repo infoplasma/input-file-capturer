@@ -2,3 +2,5 @@ scratch.py
 *.zip
 __pycache__
 .idea
+*.xlsx
+file-templates
