@@ -3,17 +3,21 @@ config = {'#_Input_Additional_Impressions.xlsx':
                'tabs':
                    {'Tabelle3':
                         {'tables':
-                             {'InputAdditionalImpressions':
+                             {'AdditionalImpressions':
                                   {'usecols': 'B:C',
                                    'header': 2,
                                    'cols_to_drop': [],
                                    'cols_to_ffill': [],
                                    'from_row': 3,
-                                   'to_row': 0
+                                   'to_row': 0,
+                                   'bq_schema': [{'name': 'CHANNEL', 'type': 'STRING'},
+                                                 {'name': 'IMPRESSIONS', 'type': 'INT64'},
+                                                 {'name': 'DATE', 'type': 'STRING'}]
+                                   # [{'name':'col_name', 'type': 'STRING'}, {'name':'col_name', 'type': 'INT64'}, {'name':'col_name', 'type': 'FLOAT64'}, {'name':'col_name', 'type': 'NUMERIC'}, {'name':'col_name', 'type': 'DATE'}, {'name':'col_name', 'type': 'DATETIME'}, ... ] use big query types OR None
                                    },
 
                               }
-                            }
+                         }
                     }
 
                },
@@ -22,37 +26,51 @@ config = {'#_Input_Additional_Impressions.xlsx':
                'tabs':
                    {'facebook_overview':
                         {'tables':
-                             {'Social_fb_overview':
+                             {'FbSocialOverview':
                                   {'usecols': 'A:L',
                                    'header': 0,
                                    'cols_to_drop': [],
                                    'cols_to_ffill': [],
                                    'from_row': 2,
-                                   'to_row': 20
+                                   'to_row': 0,
+                                   'bq_schema': [{'name': 'CHANNEL', 'type': 'STRING'},
+                                                 {'name': 'IMPRESSIONS', 'type': 'INT64'},
+                                                 {'name': 'DATE', 'type': 'STRING'}]
+                                   # [{'name':'col_name', 'type': 'STRING'}, {'name':'col_name', 'type': 'INT64'}, {'name':'col_name', 'type': 'FLOAT64'}, {'name':'col_name', 'type': 'NUMERIC'}, {'name':'col_name', 'type': 'DATE'}, {'name':'col_name', 'type': 'DATETIME'}, ... ] use big query types OR None
                                    }
                               }
-                          },
+                         },
                     'facebook_fancount':
                         {'tables':
-                             {'Social_fb_fancount ':
+                             {'FbAccountFans':
                                   {'usecols': 'A:B',
                                    'header': 0,
                                    'cols_to_drop': [],
                                    'cols_to_ffill': [],
                                    'from_row': 0,
                                    'to_row': 0,
+                                   'bq_schema': [{'name': 'CHANNEL', 'type': 'STRING'},
+                                                 {'name': 'IMPRESSIONS', 'type': 'INT64'},
+                                                 {'name': 'DATE', 'type': 'STRING'}]
+                                   # [{'name':'col_name', 'type': 'STRING'}, {'name':'col_name', 'type': 'INT64'}, {'name':'col_name', 'type': 'FLOAT64'}, {'name':'col_name', 'type': 'NUMERIC'}, {'name':'col_name', 'type': 'DATE'}, {'name':'col_name', 'type': 'DATETIME'}, ... ] use big query types OR None
+
                                    }
                               }
                          },
-                      'instagram_overview':
+                    'instagram_overview':
                         {'tables':
-                             {'Social_ig_overview  ':
+                             {'InstaSocialOverview':
                                   {'usecols': 'A:L',
                                    'header': 0,
                                    'cols_to_drop': [],
                                    'cols_to_ffill': [],
                                    'from_row': 1,
-                                   'to_row': 10,
+                                   'to_row': 0,
+                                   'bq_schema': [{'name': 'CHANNEL', 'type': 'STRING'},
+                                                 {'name': 'IMPRESSIONS', 'type': 'INT64'},
+                                                 {'name': 'DATE', 'type': 'STRING'}]
+                                   # [{'name':'col_name', 'type': 'STRING'}, {'name':'col_name', 'type': 'INT64'}, {'name':'col_name', 'type': 'FLOAT64'}, {'name':'col_name', 'type': 'NUMERIC'}, {'name':'col_name', 'type': 'DATE'}, {'name':'col_name', 'type': 'DATETIME'}, ... ] use big query types OR None
+
                                    },
                               }
                          }
@@ -63,25 +81,34 @@ config = {'#_Input_Additional_Impressions.xlsx':
                'tabs':
                    {'Total':
                         {'tables':
-                             {
-                                 'Toolbox':
-                                  {'usecols': 'A:Z',
+                             {'MobileInstallsToolbox':
+                                  {'usecols': None,
                                    'header': 0,
-                                   'cols_to_drop': ['UNNAMED:_14'],
+                                   'cols_to_drop': [],
                                    'cols_to_ffill': [],
                                    'from_row': 0,
-                                   'to_row': 0
+                                   'to_row': 0,
+                                   'bq_schema': [{'name': 'CHANNEL', 'type': 'STRING'},
+                                                 {'name': 'IMPRESSIONS', 'type': 'INT64'},
+                                                 {'name': 'DATE', 'type': 'STRING'}]
+                                   # [{'name':'col_name', 'type': 'STRING'}, {'name':'col_name', 'type': 'INT64'}, {'name':'col_name', 'type': 'FLOAT64'}, {'name':'col_name', 'type': 'NUMERIC'}, {'name':'col_name', 'type': 'DATE'}, {'name':'col_name', 'type': 'DATETIME'}, ... ] use big query types OR None
+
                                    }
                               }},
                     'Sheet2':
                         {'tables':
-                             {'Toolbox_detailed':
-                                  {'usecols': 'A:C',
+                             {'MobileInstallsToolboxDetailed':
+                                  {'usecols': None,
                                    'header': 0,
                                    'cols_to_drop': [],  # empty list if none
                                    'cols_to_ffill': [],
-                                   'from_row': 1,  # FROM EXCEL INDEX 1 based
-                                   'to_row': 24  # FROM EXCEL index,
+                                   'from_row': 0,  # FROM EXCEL INDEX 1 based
+                                   'to_row': 0,  # FROM EXCEL index,,
+                                   'bq_schema': [{'name': 'CHANNEL', 'type': 'STRING'},
+                                                 {'name': 'IMPRESSIONS', 'type': 'INT64'},
+                                                 {'name': 'DATE', 'type': 'STRING'}]
+                                   # [{'name':'col_name', 'type': 'STRING'}, {'name':'col_name', 'type': 'INT64'}, {'name':'col_name', 'type': 'FLOAT64'}, {'name':'col_name', 'type': 'NUMERIC'}, {'name':'col_name', 'type': 'DATE'}, {'name':'col_name', 'type': 'DATETIME'}, ... ] use big query types OR None
+
                                    }
                               }
                          }
@@ -94,11 +121,13 @@ config = {'#_Input_Additional_Impressions.xlsx':
                         {'tables':
                              {'statusquo_user_SAO':
                                   {'usecols': 'A:I',
-                                   'header': 7, # SAME AS EXCEL
+                                   'header': 7,  # SAME AS EXCEL ROW NUMBER
                                    'cols_to_drop': [],
-                                   'cols_to_ffill': [],
+                                   'cols_to_ffill': ['DELTA_TARGET__ACHIEVEMENT_LOCAL'],
+                                   # not sure if i should fill those empty values
                                    'from_row': 9,  # SAME AS EXCEL
-                                   'to_row': 13  # SAME AS EXCEL
+                                   'to_row': 13,  # SAME AS EXCEL
+                                   'bq_schema': None  # to automatically infer schema
                                    }
                               }
                          }
@@ -113,9 +142,10 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                   {'usecols': 'A:F,H:I',
                                    'header': 7,
                                    'cols_to_drop': [],
-                                   'cols_to_ffill': [],
+                                   'cols_to_ffill': ['DELTA_TARGET__ACHIEVEMENT_LOCAL'],
                                    'from_row': 9,
-                                   'to_row': 12
+                                   'to_row': 12,
+                                   'bq_schema': None  # to automatically infer schema
                                    },
                               'data_by_source_user_southkorea':
                                   {'usecols': 'K:M',
@@ -123,7 +153,8 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'cols_to_drop': [],
                                    'cols_to_ffill': [],
                                    'from_row': 9,
-                                   'to_row': 12
+                                   'to_row': 12,
+                                   'bq_schema': None  # to automatically infer schema
                                    }
                               }
                          }
@@ -140,7 +171,8 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'cols_to_drop': [],
                                    'cols_to_ffill': [],
                                    'from_row': 9,
-                                   'to_row': 35
+                                   'to_row': 0,
+                                   'bq_schema': None  # to automatically infer schema
                                    },
                               'data_by_source_user':
                                   {'usecols': 'K:M',
@@ -148,24 +180,26 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'cols_to_drop': [],
                                    'cols_to_ffill': [],
                                    'from_row': 9,
-                                   'to_row': 17
+                                   'to_row': 0,
+                                   'bq_schema': None  # to automatically infer schema
                                    }
                               }
                          }
                     }
                },
-          'Reach_Marketing Cloud_#.xlsx':
+          'Reach_Marketing Cloud_#.xlsx':  # THE COLUMNS HAVE BEEN CHANGED HERe, I WILL USE THE LAST FILE AS TEMPLATE!!!
               {'#': '%Y-%m-%d',
                'tabs':
                    {'Sent Emails - Previous Month':
                         {'tables':
                              {'Reach_Marketing Cloud':
-                                  {'usecols': 'A:E',
+                                  {'usecols': None,
                                    'header': 0,  # default
                                    'cols_to_drop': [],
                                    'cols_to_ffill': [],
-                                   'from_row': 0,   # default, header on top
-                                   'to_row': 0
+                                   'from_row': 0,  # default, header on top
+                                   'to_row': 0,  # this file have variable number of rows
+                                   'bq_schema': None  # to automatically infer schema
                                    }
                               }
                          }
@@ -182,41 +216,45 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'cols_to_drop': [],
                                    'cols_to_ffill': [],
                                    'from_row': 0,
-                                   'to_row': 0
+                                   'to_row': 0,
+                                   'bq_schema': None  # to automatically infer schema
                                    }
                               }
                          }
                     }
                },
-          'Video _ Youtube Crafstmen #  (Temporary).xlsx':
+          'Video _ Youtube Crafstmen #.xlsx':  # the filename has been changed. using the latest
               {'#': '%Y',
                'tabs':
                    {'Sheet1':
                         {'tables':
-                             {'yt_craftsmen':
+                             {'YTCraftsman':
                                   {'usecols': None,
                                    'header': 0,
                                    'cols_to_drop': [],
                                    'cols_to_ffill': [],
                                    'from_row': 0,
-                                   'to_row': 0
+                                   'to_row': 0,
+                                   'bq_schema': None  # to automatically infer schema
                                    }
                               }
                          }
                     }
                },
-          '#<filename>.xlsx': # the `#` is the placeholder for the DATE
+
+          # ------- USE THIS AS TEMPLATE ----------
+          '#<filename>.xlsx':  # the `#` is the placeholder for the DATE, must me in the same position as in the filename
               {'#': '%Y%m',
                'tabs':
                    {'<TAB_NAME1>':
                         {'tables':
                              {'<TABLE_ID1>':
-                                  {'usecols': 'A:Z', # None, o auto select them all
-                                   'header': 0,     # will take the first row as the header
+                                  {'usecols': 'A:Z',  # None, o auto select them all
+                                   'header': 0,  # will take the first row as the header
                                    'cols_to_drop': [],
                                    'cols_to_ffill': [],
-                                   'from_row': 1,   # 0 to autoselect them all. same index as excel, 1-based
-                                   'to_row': 10     # 0 to aoutselect them all. same index as excel, 1-based
+                                   'from_row': 1,  # 0 to autoselect them all. same index as excel, 1-based
+                                   'to_row': 10  # 0 to aoutselect them all. same index as excel, 1-based
                                    },
                               '<TABLE_ID2>':
                                   {'usecols': 'A:Z',
@@ -224,7 +262,8 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'cols_to_drop': [''],
                                    'cols_to_ffill': [''],
                                    'from_row': 1,
-                                   'to_row': 10
+                                   'to_row': 10,
+                                   'bq_schema': None  # to automatically infer schema
                                    }
                               }},
                     '<TAB_NAME2>':
@@ -236,6 +275,7 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'cols_to_ffill': [''],
                                    'from_row': 1,
                                    'to_row': 10,
+                                   'bq_schema': None  # to automatically infer schema
                                    },
                               '<TABLE_ID2>':
                                   {'usecols': 'A:Z',
@@ -244,6 +284,10 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'cols_to_ffill': [''],
                                    'from_row': 1,
                                    'to_row': 10,
+                                   'bq_schema': [{'name': 'CHANNEL', 'type': 'STRING'},
+                                                 {'name': 'IMPRESSIONS', 'type': 'INT64'},
+                                                 {'name': 'DATE', 'type': 'STRING'}]  # [{'name':'col_name', 'type': 'STRING'}, {'name':'col_name', 'type': 'INT64'}, {'name':'col_name', 'type': 'FLOAT64'}, {'name':'col_name', 'type': 'NUMERIC'}, {'name':'col_name', 'type': 'DATE'}, {'name':'col_name', 'type': 'DATETIME'}, ... ] use big query types OR None
+
                                    }
                               }
                          }

@@ -92,6 +92,7 @@ def preview(fname):
         tables = list(cfg[index]['tabs'][tab]['tables'].keys())
         print(f"TABLES: {tables}")
         for table in tables:
+            change_list[table] = {}
             print("------------------------------------------------------------")
             usecols = cfg[index]['tabs'][tab]['tables'][table]['usecols']
             header = cfg[index]['tabs'][tab]['tables'][table]['header']
@@ -109,7 +110,7 @@ def preview(fname):
                 to_row -= header  # offset if not zero
             # offset
             df = {}
-            df = pd.read_excel(f"gs://file-uploader_vol/{fname}", sheet_name=tab, header=header-1, usecols=usecols)
+            df = pd.read_excel(f"gs://file-uploader_vol/{fname}", sheet_name=tab, header=header-1, usecols=usecols, dtype=object)
             df['Date'] = f'{iso}'
             rename_cols_for_bq(df)
             # --- drop col
@@ -132,18 +133,20 @@ def preview(fname):
             print("TAIL")
             print("----")
             print(df.tail(2).to_string())
-            change_list[table] = df
+            change_list[table]['data'] = df
+            change_list[table]['bq_schema'] = cfg[index]['tabs'][tab]['tables'][table]['bq_schema']
 
     return change_list
 
 
-def push_to_bq(df, table_id):
-    df.to_gbq(f'manual_input_files.{table_id}', project_id=PROJECT_ID, if_exists='append')
+def push_to_bq(df, table_id, schema=None):
+    df.to_gbq(f'manual_input_files.{table_id}', project_id=PROJECT_ID, if_exists='append', table_schema=schema)
+    print("Ok")
 
 
 def commit(change_list):
     for table_id in change_list.keys():
-        push_to_bq(change_list[table_id], table_id)
+        push_to_bq(change_list[table_id]['data'], table_id, change_list[table_id]['bq_schema'])
 
 
 # [START functions_helloworld_storage]
