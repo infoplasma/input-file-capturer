@@ -3,11 +3,14 @@ from config import config as cfg
 from google.cloud import storage, bigquery
 import pandas as pd
 import re
+import os
 
 
 # project configuration
 PROJECT_ID = 'bosch-dashboard-295910'
 BUCKET_NAME = 'file-uploader_vol'
+VERBOSE = True
+
 
 # object instantiation
 storage_client = storage.Client(PROJECT_ID)
@@ -60,6 +63,81 @@ def rename_cols_for_bq(df):
     df.columns = [c.upper().replace("%", "_PERCENT") for c in df.columns]
 
 
+def list_local_templates():
+    available_templates = os.listdir('file-templates')
+    return available_templates
+
+
+def available_tabs_per_file(fname):
+    if fname in list_local_templates():
+        xl = pd.ExcelFile(f"file-templates/{fname}")
+        return xl.sheet_names
+
+
+def preview_local_template(fname):
+    """
+    :param fname: string containing
+    :return: dict. keys are the big query table names. values are the table contents.
+    """
+    change_list = {}
+    data = get_data(fname)
+    index = data['index']
+    iso = data['iso8601']
+    tabs = list(cfg[index]['tabs'].keys())
+
+    for tab in tabs:
+        tables = list(cfg[index]['tabs'][tab]['tables'].keys())
+        for table in tables:
+            change_list[table] = {}
+            usecols = cfg[index]['tabs'][tab]['tables'][table]['usecols']
+            header = cfg[index]['tabs'][tab]['tables'][table]['header']
+
+            cols_to_drop = cfg[index]['tabs'][tab]['tables'][table]['cols_to_drop']
+            cols_to_ffill = cfg[index]['tabs'][tab]['tables'][table]['cols_to_ffill']
+            from_row = cfg[index]['tabs'][tab]['tables'][table]['from_row']
+            to_row = cfg[index]['tabs'][tab]['tables'][table]['to_row']
+
+            if not header:  # to match excel indexing in the configuration file
+                header = 1
+
+            if from_row:
+                from_row -= header  # offset if not zero
+
+            if to_row:
+                to_row -= header  # offset if not zero
+
+            df = pd.read_excel(f"file-templates/{fname}", sheet_name=tab, header=header-1, usecols=usecols, dtype=object)
+            df['Date'] = f'{iso}'
+
+            rename_cols_for_bq(df)
+
+            # --- drop col
+            if len(cols_to_drop):
+                df.drop(cols_to_drop, axis=1, inplace=True)
+            # --- fill col
+            if len(cols_to_ffill):
+                for col in cols_to_ffill:
+                    df[col] = df[col].fillna(method='ffill')
+            # --- skip rows
+            if from_row and to_row:
+                df = df[from_row-1:to_row]   # skipping the totals surmmary row (1st row below the header! :S)
+            if from_row and not to_row:
+                df = df[from_row - 1:]
+
+            change_list[table]['data'] = df
+            change_list[table]['bq_schema'] = cfg[index]['tabs'][tab]['tables'][table]['bq_schema']
+            print(f"FILE: `{fname}` - TAB: `{tab}` - TABLE: `{table}`")
+            print("HEAD ==>")
+            print(df.head(2).to_string())
+            print("TAIL ==>")
+            print(df.tail(2).to_string())
+            print(f"BQ COLS FOR TABLE `{table}` ==> (use the output only as a copy/paste template, they are not the actual types!!!")
+            for col in df.columns:
+                print(f"{{'name': '{col}', 'type': 'STRING'}},")
+
+    return change_list
+
+
 def delete_data_if_date_exists(fname):
     client = bigquery.Client(project=PROJECT_ID)
     data = get_data(fname)
@@ -74,7 +152,6 @@ def delete_data_if_date_exists(fname):
 
 def preview(fname):
     """
-
     :param fname: string containing
     :return: dict. keys are the big query table names. values are the table contents.
     """
@@ -108,7 +185,6 @@ def preview(fname):
             to_row = cfg[index]['tabs'][tab]['tables'][table]['to_row']
             if to_row:
                 to_row -= header  # offset if not zero
-            # offset
             df = {}
             df = pd.read_excel(f"gs://file-uploader_vol/{fname}", sheet_name=tab, header=header-1, usecols=usecols, dtype=object)
             df['Date'] = f'{iso}'
@@ -126,15 +202,9 @@ def preview(fname):
             if from_row and not to_row:
                 df = df[from_row - 1:]
 
-            print(f"SHOWING FILE: {fname} - TAB: {tab} - TABLE: {table}")
-            print("HEAD")
-            print("----")
-            print(df.head(2).to_string())
-            print("TAIL")
-            print("----")
-            print(df.tail(2).to_string())
             change_list[table]['data'] = df
             change_list[table]['bq_schema'] = cfg[index]['tabs'][tab]['tables'][table]['bq_schema']
+
 
     return change_list
 
@@ -162,7 +232,7 @@ def gcs_function_hook(event, context):
     Returns:
         None; the output is written to Stackdriver Logging
     """
-    ACTIVATE = True  # set as ENV vars later
+
     DELETE_IF_DATE_EXISTS = True
 
     print('Event ID: {}'.format(context.event_id))
@@ -179,17 +249,14 @@ def gcs_function_hook(event, context):
 
     changes = preview(fname)
 
-    if ACTIVATE:
+    if os.environ['ACTIVATE'].capitalize() == 'TRUE':
+        if VERBOSE:
+            print("INFO: COMMITTING CHANGES TO BIG QUERY")
         commit(changes)
+        print("Ok")
     else:
+        print("WARNING: COMMIT IS DISABLED!!! NO WRITES TO BIG QUERY")
         for table_id in changes.keys():
             print(f"TEST: WRITING ON TABLE: {table_id}")
             print(F"data: {changes[table_id]}")
-
-
 # [END functions_helloworld_storage]
-
-
-if __name__ == '__main__':
-    preview('Mobile KPI 2020-08.xlsx')
-

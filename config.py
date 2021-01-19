@@ -33,9 +33,19 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'cols_to_ffill': [],
                                    'from_row': 2,
                                    'to_row': 0,
-                                   'bq_schema': [{'name': 'CHANNEL', 'type': 'STRING'},
-                                                 {'name': 'IMPRESSIONS', 'type': 'INT64'},
-                                                 {'name': 'DATE', 'type': 'STRING'}]
+                                   'bq_schema': [{'name': 'SALES_REGION', 'type': 'STRING'},
+                                                 {'name': 'WEBSITE', 'type': 'STRING'},
+                                                 {'name': 'COUNTRY', 'type': 'STRING'},
+                                                 {'name': 'TOTAL_IMPRESSIONS', 'type': 'INT64'},
+                                                 {'name': 'ORGANIC_IMPRESSIONS', 'type': 'INT64'},
+                                                 {'name': 'PAID_IMPRESSIONS', 'type': 'INT64'},
+                                                 {'name': 'CPM', 'type': 'FLOAT64'},
+                                                 {'name': 'AD_SPENT', 'type': 'FLOAT64'},
+                                                 {'name': 'TOTAL_ENGAGEMENT', 'type': 'INT64'},
+                                                 {'name': 'ENGAGEMENT_RATE', 'type': 'FLOAT64'},
+                                                 {'name': 'FAN_COUNT', 'type': 'INT64'},
+                                                 {'name': 'UNIQUE_PAID_REACH', 'type': 'INT64'},
+                                                 {'name': 'DATE', 'type': 'DATE'}, ]
                                    # [{'name':'col_name', 'type': 'STRING'}, {'name':'col_name', 'type': 'INT64'}, {'name':'col_name', 'type': 'FLOAT64'}, {'name':'col_name', 'type': 'NUMERIC'}, {'name':'col_name', 'type': 'DATE'}, {'name':'col_name', 'type': 'DATETIME'}, ... ] use big query types OR None
                                    }
                               }
@@ -49,9 +59,9 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'cols_to_ffill': [],
                                    'from_row': 0,
                                    'to_row': 0,
-                                   'bq_schema': [{'name': 'CHANNEL', 'type': 'STRING'},
-                                                 {'name': 'IMPRESSIONS', 'type': 'INT64'},
-                                                 {'name': 'DATE', 'type': 'STRING'}]
+                                   'bq_schema': [{'name': 'PAGES', 'type': 'STRING'},
+                                                 {'name': 'FANS', 'type': 'INT64'},
+                                                 {'name': 'DATE', 'type': 'DATE'}, ]
                                    # [{'name':'col_name', 'type': 'STRING'}, {'name':'col_name', 'type': 'INT64'}, {'name':'col_name', 'type': 'FLOAT64'}, {'name':'col_name', 'type': 'NUMERIC'}, {'name':'col_name', 'type': 'DATE'}, {'name':'col_name', 'type': 'DATETIME'}, ... ] use big query types OR None
 
                                    }
@@ -66,9 +76,19 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'cols_to_ffill': [],
                                    'from_row': 1,
                                    'to_row': 0,
-                                   'bq_schema': [{'name': 'CHANNEL', 'type': 'STRING'},
-                                                 {'name': 'IMPRESSIONS', 'type': 'INT64'},
-                                                 {'name': 'DATE', 'type': 'STRING'}]
+                                   'bq_schema': [{'name': 'SALES_REGION', 'type': 'STRING'},
+                                                 {'name': 'WEBSITE', 'type': 'STRING'},
+                                                 {'name': 'COUNTRY', 'type': 'STRING'},
+                                                 {'name': 'TOTAL_IMPRESSIONS', 'type': 'INT64'},
+                                                 {'name': 'ORGANIC_IMPRESSIONS', 'type': 'INT64'},
+                                                 {'name': 'PAID_IMPRESSIONS', 'type': 'INT64'},
+                                                 {'name': 'CPM', 'type': 'FLOAT64'},
+                                                 {'name': 'AD_SPENT', 'type': 'FLOAT64'},
+                                                 {'name': 'TOTAL_ENGAGEMENT', 'type': 'INT64'},
+                                                 {'name': 'ENGAGEMENT_RATE', 'type': 'FLOAT64'},
+                                                 {'name': 'FAN_COUNT', 'type': 'INT64'},
+                                                 {'name': 'UNIQUE_PAID_REACH', 'type': 'INT64'},
+                                                 {'name': 'DATE', 'type': 'DATE'}]
                                    # [{'name':'col_name', 'type': 'STRING'}, {'name':'col_name', 'type': 'INT64'}, {'name':'col_name', 'type': 'FLOAT64'}, {'name':'col_name', 'type': 'NUMERIC'}, {'name':'col_name', 'type': 'DATE'}, {'name':'col_name', 'type': 'DATETIME'}, ... ] use big query types OR None
 
                                    },
@@ -88,9 +108,21 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'cols_to_ffill': [],
                                    'from_row': 0,
                                    'to_row': 0,
-                                   'bq_schema': [{'name': 'CHANNEL', 'type': 'STRING'},
-                                                 {'name': 'IMPRESSIONS', 'type': 'INT64'},
-                                                 {'name': 'DATE', 'type': 'STRING'}]
+                                   'bq_schema': [{'name': 'MONTH', 'type': 'STRING'},
+                                                 {'name': 'RATING__ANDROID__MONTHLY', 'type': 'FLOAT64'},
+                                                 {'name': 'RATING__IOS__MONTHLY', 'type': 'FLOAT64'},
+                                                 {'name': 'NO_OF_RATINGS_MONTHLY', 'type': 'INT64'},
+                                                 {'name': 'NO_OF_REVIEWS_MONTHLY', 'type': 'INT64'},
+                                                 {'name': 'RATING__ANDROID__TOTAL', 'type': 'FLOAT64'},
+                                                 {'name': 'RATING__IOS__TOTAL', 'type': 'FLOAT64'},
+                                                 {'name': 'NO_OF_RATINGS_TOTAL', 'type': 'INT64'},
+                                                 {'name': 'NO_OF_REVIEWS_TOTAL', 'type': 'INT64'},
+                                                 {'name': 'INSTALLS_ON_ACTIVE_DEVICES', 'type': 'INT64'},
+                                                 {'name': 'SESSIONS', 'type': 'STRING'},
+                                                 {'name': 'MONTHLY_ACTIVE_USERS__MAU_', 'type': 'INT64'},
+                                                 {'name': 'ACTIVE_USAGE_QUOTA', 'type': 'FLOAT64'},
+                                                 {'name': 'NEW_USERS', 'type': 'INT64'},
+                                                 {'name': 'DATE', 'type': 'DATE'}, ]
                                    # [{'name':'col_name', 'type': 'STRING'}, {'name':'col_name', 'type': 'INT64'}, {'name':'col_name', 'type': 'FLOAT64'}, {'name':'col_name', 'type': 'NUMERIC'}, {'name':'col_name', 'type': 'DATE'}, {'name':'col_name', 'type': 'DATETIME'}, ... ] use big query types OR None
 
                                    }
@@ -104,9 +136,20 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'cols_to_ffill': [],
                                    'from_row': 0,  # FROM EXCEL INDEX 1 based
                                    'to_row': 0,  # FROM EXCEL index,,
-                                   'bq_schema': [{'name': 'CHANNEL', 'type': 'STRING'},
-                                                 {'name': 'IMPRESSIONS', 'type': 'INT64'},
-                                                 {'name': 'DATE', 'type': 'STRING'}]
+                                   'bq_schema': [{'name': 'SALES_REGION', 'type': 'STRING'},
+                                                 {'name': 'COUNTRY', 'type': 'STRING'},
+                                                 {'name': 'INSTALLS_ON_ACTIVE_DEVICES', 'type': 'INT64'},
+                                                 {'name': 'MTM_IN__PERCENT', 'type': 'STRING'},
+                                                 {'name': 'USERS', 'type': 'STRING'},
+                                                 {'name': 'MTM_IN__PERCENT.1', 'type': 'STRING'},
+                                                 {'name': 'NEW_USERS', 'type': 'STRING'},
+                                                 {'name': 'SESSIONS', 'type': 'STRING'},
+                                                 {'name': 'UNNAMED:_8', 'type': 'STRING'},
+                                                 {'name': 'UNNAMED:_9', 'type': 'STRING'},
+                                                 {'name': 'UNNAMED:_10', 'type': 'STRING'},
+                                                 {'name': 'UNNAMED:_11', 'type': 'STRING'},
+                                                 {'name': 'UNNAMED:_12', 'type': 'STRING'},
+                                                 {'name': 'DATE', 'type': 'DATE'}, ]
                                    # [{'name':'col_name', 'type': 'STRING'}, {'name':'col_name', 'type': 'INT64'}, {'name':'col_name', 'type': 'FLOAT64'}, {'name':'col_name', 'type': 'NUMERIC'}, {'name':'col_name', 'type': 'DATE'}, {'name':'col_name', 'type': 'DATETIME'}, ... ] use big query types OR None
 
                                    }
@@ -122,12 +165,22 @@ config = {'#_Input_Additional_Impressions.xlsx':
                              {'statusquo_user_SAO':
                                   {'usecols': 'A:I',
                                    'header': 7,  # SAME AS EXCEL ROW NUMBER
-                                   'cols_to_drop': [],
+                                   'cols_to_drop': ['UNNAMED:_6'],
                                    'cols_to_ffill': ['DELTA_TARGET__ACHIEVEMENT_LOCAL'],
                                    # not sure if i should fill those empty values
                                    'from_row': 9,  # SAME AS EXCEL
                                    'to_row': 13,  # SAME AS EXCEL
-                                   'bq_schema': None  # to automatically infer schema
+                                   'bq_schema': [{'name': 'REGION', 'type': 'STRING'},
+                                                 {'name': 'R_SORT', 'type': 'INT64'},
+                                                 {'name': 'COUNTRY', 'type': 'STRING'},
+                                                 {'name': 'ALL_DATA', 'type': 'INT64'},
+                                                 {'name': 'CONSENT', 'type': 'INT64'},
+                                                 {'name': 'CONSENT_PY', 'type': 'INT64'},
+                                                 {'name': 'UNNAMED:_6', 'type': 'STRING'},
+                                                 {'name': 'LOCAL_USER_CONSENT', 'type': 'STRING'},
+                                                 {'name': 'DELTA_TARGET__ACHIEVEMENT_LOCAL', 'type': 'STRING'},
+                                                 {'name': 'DATE', 'type': 'DATE'},
+                                                 ]  # to automatically infer schema
                                    }
                               }
                          }
@@ -145,7 +198,15 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'cols_to_ffill': ['DELTA_TARGET__ACHIEVEMENT_LOCAL'],
                                    'from_row': 9,
                                    'to_row': 12,
-                                   'bq_schema': None  # to automatically infer schema
+                                   'bq_schema': [{'name': 'REGION', 'type': 'STRING'},
+                                                 {'name': 'R_SORT', 'type': 'INT64'},
+                                                 {'name': 'COUNTRY', 'type': 'STRING'},
+                                                 {'name': 'ALL_DATA', 'type': 'INT64'},
+                                                 {'name': 'CONSENT', 'type': 'INT64'},
+                                                 {'name': 'CONSENT_PY', 'type': 'INT64'},
+                                                 {'name': 'LOCAL_USER_CONSENT', 'type': 'INT64'},
+                                                 {'name': 'DELTA_TARGET__ACHIEVEMENT_LOCAL', 'type': 'INT64'},
+                                                 {'name': 'DATE', 'type': 'DATE'}, ]  # to automatically infer schema
                                    },
                               'data_by_source_user_southkorea':
                                   {'usecols': 'K:M',
@@ -154,7 +215,10 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'cols_to_ffill': [],
                                    'from_row': 9,
                                    'to_row': 12,
-                                   'bq_schema': None  # to automatically infer schema
+                                   'bq_schema': [{'name': 'DATA_BY_SOURCE', 'type': 'STRING'},
+                                                 {'name': '_DATA_ALL_DATA', 'type': 'INT64'},
+                                                 {'name': '_DATA_CONSENT', 'type': 'INT64'},
+                                                 {'name': 'DATE', 'type': 'DATE'}, ]  # to automatically infer schema
                                    }
                               }
                          }
@@ -172,7 +236,15 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'cols_to_ffill': [],
                                    'from_row': 9,
                                    'to_row': 0,
-                                   'bq_schema': None  # to automatically infer schema
+                                   'bq_schema': [{'name': 'REGION', 'type': 'STRING'},
+                                                 {'name': 'R_SORT', 'type': 'INT64'},
+                                                 {'name': 'COUNTRY', 'type': 'STRING'},
+                                                 {'name': 'ALL_DATA', 'type': 'INT64'},
+                                                 {'name': 'CONSENT', 'type': 'INT64'},
+                                                 {'name': 'CONSENT_PY', 'type': 'INT64'},
+                                                 {'name': 'LOCAL_USER_CONSENT', 'type': 'INT64'},
+                                                 {'name': 'DELTA_TARGET__ACHIEVEMENT_LOCAL', 'type': 'INT64'},
+                                                 {'name': 'DATE', 'type': 'DATE'}]  # to automatically infer schema
                                    },
                               'data_by_source_user':
                                   {'usecols': 'K:M',
@@ -181,7 +253,10 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'cols_to_ffill': [],
                                    'from_row': 9,
                                    'to_row': 0,
-                                   'bq_schema': None  # to automatically infer schema
+                                   'bq_schema': [{'name': 'DATA_BY_SOURCE', 'type': 'STRING'},
+                                                 {'name': '_DATA_ALL_DATA', 'type': 'STRING'},
+                                                 {'name': '_DATA_CONSENT', 'type': 'STRING'},
+                                                 {'name': 'DATE', 'type': 'DATE'}, ]  # to automatically infer schema
                                    }
                               }
                          }
@@ -199,7 +274,13 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'cols_to_ffill': [],
                                    'from_row': 0,  # default, header on top
                                    'to_row': 0,  # this file have variable number of rows
-                                   'bq_schema': None  # to automatically infer schema
+                                   'bq_schema': [{'name': 'REGION', 'type': 'STRING'},
+                                                 {'name': 'MEASURES', 'type': 'STRING'},
+                                                 {'name': 'MONTH_', 'type': 'STRING'},
+                                                 {'name': 'SENT_MESSAGES', 'type': 'INT64'},
+                                                 {'name': 'OPENED_MESSAGE_RATE', 'type': 'FLOAT64'},
+                                                 {'name': 'CTR', 'type': 'FLOAT64'},
+                                                 {'name': 'DATE', 'type': 'DATE'}, ]  # to automatically infer schema
                                    }
                               }
                          }
@@ -211,13 +292,19 @@ config = {'#_Input_Additional_Impressions.xlsx':
                    {'Sheet1':
                         {'tables':
                              {'SAO_Reach_Marketing Cloud':
-                                  {'usecols': None,  # all cols
+                                  {'usecols': 'A:F',  # all cols
                                    'header': 0,
                                    'cols_to_drop': [],
                                    'cols_to_ffill': [],
                                    'from_row': 0,
                                    'to_row': 0,
-                                   'bq_schema': None  # to automatically infer schema
+                                   'bq_schema': [{'name': 'REGION', 'type': 'STRING'},
+                                                 {'name': 'COUNTRY', 'type': 'STRING'},
+                                                 {'name': 'MONTH', 'type': 'STRING'},
+                                                 {'name': 'SENT_EMAILS', 'type': 'FLOAT64'},
+                                                 {'name': 'OPEN_RATE__PERCENT', 'type': 'FLOAT64'},
+                                                 {'name': 'CLICK_RATE__PERCENT', 'type': 'STRING'},
+                                                 {'name': 'DATE', 'type': 'DATE'}, ]
                                    }
                               }
                          }
@@ -235,7 +322,18 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'cols_to_ffill': [],
                                    'from_row': 0,
                                    'to_row': 0,
-                                   'bq_schema': None  # to automatically infer schema
+                                   'bq_schema': [{'name': 'SALES_REGION', 'type': 'STRING'},
+                                                 {'name': 'WEBSITE', 'type': 'STRING'},
+                                                 {'name': 'COUNTRY', 'type': 'STRING'},
+                                                 {'name': 'YOUTUBE', 'type': 'STRING'},
+                                                 {'name': '_YT_ESTIMATED_NUMBER_OF_ONLINE_CRAFTSMENS_PER_COUNTRY',
+                                                  'type': 'INT64'},
+                                                 {'name': '_YT__PERCENT_OF_CRAFTSMENS_REACHED_YTD__', 'type': 'STRING'},
+                                                 {'name': '_VIDEO_ESTIMATED_NUMBER_OF_ONLINE_CRAFTSMENS_PER_COUNTRY',
+                                                  'type': 'INT64'},
+                                                 {'name': '_VIDEO__PERCENT_OF_CRAFTSMENS_REACHED_YTD__',
+                                                  'type': 'STRING'},
+                                                 {'name': 'DATE', 'type': 'DATE'}, ]
                                    }
                               }
                          }
@@ -254,7 +352,8 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'cols_to_drop': [],
                                    'cols_to_ffill': [],
                                    'from_row': 1,  # 0 to autoselect them all. same index as excel, 1-based
-                                   'to_row': 10  # 0 to aoutselect them all. same index as excel, 1-based
+                                   'to_row': 10,  # 0 to aoutselect them all. same index as excel, 1-based
+                                   'bq_schema': None
                                    },
                               '<TABLE_ID2>':
                                   {'usecols': 'A:Z',
@@ -286,7 +385,8 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'to_row': 10,
                                    'bq_schema': [{'name': 'CHANNEL', 'type': 'STRING'},
                                                  {'name': 'IMPRESSIONS', 'type': 'INT64'},
-                                                 {'name': 'DATE', 'type': 'STRING'}]  # [{'name':'col_name', 'type': 'STRING'}, {'name':'col_name', 'type': 'INT64'}, {'name':'col_name', 'type': 'FLOAT64'}, {'name':'col_name', 'type': 'NUMERIC'}, {'name':'col_name', 'type': 'DATE'}, {'name':'col_name', 'type': 'DATETIME'}, ... ] use big query types OR None
+                                                 {'name': 'DATE', 'type': 'STRING'}]
+                                   # [{'name':'col_name', 'type': 'STRING'}, {'name':'col_name', 'type': 'INT64'}, {'name':'col_name', 'type': 'FLOAT64'}, {'name':'col_name', 'type': 'NUMERIC'}, {'name':'col_name', 'type': 'DATE'}, {'name':'col_name', 'type': 'DATETIME'}, ... ] use big query types OR None
 
                                    }
                               }
