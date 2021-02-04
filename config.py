@@ -117,7 +117,7 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                                  {'name': 'RATING__IOS__TOTAL', 'type': 'FLOAT64'},
                                                  {'name': 'NO_OF_RATINGS_TOTAL', 'type': 'INT64'},
                                                  {'name': 'NO_OF_REVIEWS_TOTAL', 'type': 'INT64'},
-                                                 {'name': 'INSTALLS_ON_ACTIVE_DEVICES', 'type': 'INT64'},
+                                                 {'name': 'INSTALLS_ON_ACTIVE_DEVICES', 'type': 'FLOAT64'},
                                                  {'name': 'SESSIONS', 'type': 'STRING'},
                                                  {'name': 'MONTHLY_ACTIVE_USERS__MAU_', 'type': 'INT64'},
                                                  {'name': 'ACTIVE_USAGE_QUOTA', 'type': 'FLOAT64'},
@@ -130,26 +130,20 @@ config = {'#_Input_Additional_Impressions.xlsx':
                     'Sheet2':
                         {'tables':
                              {'MobileInstallsToolboxDetailed':
-                                  {'usecols': None,
+                                  {'usecols': 'B:C,E,G:H',
                                    'header': 0,
                                    'cols_to_drop': [],  # empty list if none
                                    'cols_to_ffill': [],
                                    'from_row': 0,  # FROM EXCEL INDEX 1 based
                                    'to_row': 0,  # FROM EXCEL index,,
-                                   'bq_schema': [{'name': 'SALES_REGION', 'type': 'STRING'},
-                                                 {'name': 'COUNTRY', 'type': 'STRING'},
-                                                 {'name': 'INSTALLS_ON_ACTIVE_DEVICES', 'type': 'INT64'},
-                                                 {'name': 'MTM_IN__PERCENT', 'type': 'STRING'},
-                                                 {'name': 'USERS', 'type': 'STRING'},
-                                                 {'name': 'MTM_IN__PERCENT.1', 'type': 'STRING'},
-                                                 {'name': 'NEW_USERS', 'type': 'STRING'},
-                                                 {'name': 'SESSIONS', 'type': 'STRING'},
-                                                 {'name': 'UNNAMED:_8', 'type': 'STRING'},
-                                                 {'name': 'UNNAMED:_9', 'type': 'STRING'},
-                                                 {'name': 'UNNAMED:_10', 'type': 'STRING'},
-                                                 {'name': 'UNNAMED:_11', 'type': 'STRING'},
-                                                 {'name': 'UNNAMED:_12', 'type': 'STRING'},
-                                                 {'name': 'DATE', 'type': 'DATE'}, ]
+                                   'bq_schema': [
+                                       {'name': 'COUNTRY', 'type': 'STRING'},
+                                       {'name': 'INSTALLS_ON_ACTIVE_DEVICES', 'type': 'FLOAT64'},
+                                       {'name': 'USERS', 'type': 'INT64'},
+                                       {'name': 'NEW_USERS', 'type': 'INT64'},
+                                       {'name': 'SESSIONS', 'type': 'INT64'},
+                                       {'name': 'DATE', 'type': 'DATE'}
+                                   ]
                                    # [{'name':'col_name', 'type': 'STRING'}, {'name':'col_name', 'type': 'INT64'}, {'name':'col_name', 'type': 'FLOAT64'}, {'name':'col_name', 'type': 'NUMERIC'}, {'name':'col_name', 'type': 'DATE'}, {'name':'col_name', 'type': 'DATETIME'}, ... ] use big query types OR None
 
                                    }
@@ -163,9 +157,9 @@ config = {'#_Input_Additional_Impressions.xlsx':
                    {'PDH Data Summary REA NEW':
                         {'tables':
                              {'statusquo_user_SAO':
-                                  {'usecols': 'A:I',
+                                  {'usecols': 'A:F,H:I',
                                    'header': 7,  # SAME AS EXCEL ROW NUMBER
-                                   'cols_to_drop': ['UNNAMED:_6'],
+                                   'cols_to_drop': [],
                                    'cols_to_ffill': ['DELTA_TARGET__ACHIEVEMENT_LOCAL'],
                                    # not sure if i should fill those empty values
                                    'from_row': 9,  # SAME AS EXCEL
@@ -176,7 +170,6 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                                  {'name': 'ALL_DATA', 'type': 'INT64'},
                                                  {'name': 'CONSENT', 'type': 'INT64'},
                                                  {'name': 'CONSENT_PY', 'type': 'INT64'},
-                                                 {'name': 'UNNAMED:_6', 'type': 'STRING'},
                                                  {'name': 'LOCAL_USER_CONSENT', 'type': 'STRING'},
                                                  {'name': 'DELTA_TARGET__ACHIEVEMENT_LOCAL', 'type': 'STRING'},
                                                  {'name': 'DATE', 'type': 'DATE'},
@@ -265,10 +258,10 @@ config = {'#_Input_Additional_Impressions.xlsx':
           'Reach_Marketing Cloud_#.xlsx':  # THE COLUMNS HAVE BEEN CHANGED HERe, I WILL USE THE LAST FILE AS TEMPLATE!!!
               {'#': '%Y-%m-%d',
                'tabs':
-                   {'Sent Emails - Previous Month':
+                   {'PTEU Campaign Report':
                         {'tables':
                              {'Reach_Marketing Cloud':
-                                  {'usecols': None,
+                                  {'usecols': 'A:F',
                                    'header': 0,  # default
                                    'cols_to_drop': [],
                                    'cols_to_ffill': [],
@@ -276,7 +269,7 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'to_row': 0,  # this file have variable number of rows
                                    'bq_schema': [{'name': 'REGION', 'type': 'STRING'},
                                                  {'name': 'MEASURES', 'type': 'STRING'},
-                                                 {'name': 'MONTH_', 'type': 'STRING'},
+                                                 {'name': 'MONTH', 'type': 'STRING'},
                                                  {'name': 'SENT_MESSAGES', 'type': 'INT64'},
                                                  {'name': 'OPENED_MESSAGE_RATE', 'type': 'FLOAT64'},
                                                  {'name': 'CTR', 'type': 'FLOAT64'},

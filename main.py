@@ -31,6 +31,7 @@ def get_data(fname_with_date):
         date_format = cfg[file_cfg_index]['#']
 
         data_file_completa = datetime.strptime(extracted_date, date_format)
+
         Y = data_file_completa.year
         m = data_file_completa.month
         d = data_file_completa.day
@@ -55,12 +56,10 @@ def get_raw_df(f, sheet_name=None) -> pd.DataFrame:
 
 def rename_cols_for_bq(df):
     """ rename columns to comply with BQ naming standard """
-    df.columns = [c.upper().replace(" ", "_") for c in df.columns]
-    df.columns = [c.upper().replace("-", "_") for c in df.columns]
-    df.columns = [c.upper().replace("*", "_") for c in df.columns]
-    df.columns = [re.sub(r'[()]', '_', c) for c in df.columns]
-    df.columns = [re.sub(r'\n', '_', c) for c in df.columns]
-    df.columns = [c.upper().replace("%", "_PERCENT") for c in df.columns]
+    df.columns = [c.upper() for c in df.columns]
+    df.columns = [c.replace("%", "_PERCENT") for c in df.columns]
+    df.columns = [re.sub(r'^\d+', '_', c) for c in df.columns]
+    df.columns = [re.sub(r'[^a-zA-Z0-9_]', '_', c) for c in df.columns]
 
 
 def list_local_templates():
@@ -147,7 +146,9 @@ def delete_data_if_date_exists(fname):
     for tab in tabs:
         tables = list(cfg[file_id]['tabs'][tab]['tables'].keys())
         for table in tables:
-            return client.query(f'''DELETE FROM `{PROJECT_ID}.manual_input_files.{table}` WHERE DATE="{date}"''')
+            print(f"INFO: DELETING DATE: `{date}` DATA FROM TABLE: `{table}`")
+            client.query(f'''DELETE FROM `{PROJECT_ID}.manual_input_files.{table}` WHERE DATE="{date}"''')
+    print("Ok")
 
 
 def preview(fname):
@@ -160,7 +161,6 @@ def preview(fname):
     index = data['index']
     iso = data['iso8601']
     tabs = list(cfg[index]['tabs'].keys())
-    print("================================================================")
     print(f"DATA: {data}")
     print(f"CONFIG: {cfg[index]}")
 
@@ -170,7 +170,6 @@ def preview(fname):
         print(f"TABLES: {tables}")
         for table in tables:
             change_list[table] = {}
-            print("------------------------------------------------------------")
             usecols = cfg[index]['tabs'][tab]['tables'][table]['usecols']
             header = cfg[index]['tabs'][tab]['tables'][table]['header']
             if not header:  # to match excel inedxing in the configuration file
@@ -204,7 +203,7 @@ def preview(fname):
 
             change_list[table]['data'] = df
             change_list[table]['bq_schema'] = cfg[index]['tabs'][tab]['tables'][table]['bq_schema']
-
+            print(f"FILE: `{fname}` - TAB: `{tab}` - TABLE: `{table}`")
 
     return change_list
 
@@ -234,14 +233,15 @@ def gcs_function_hook(event, context):
     """
 
     DELETE_IF_DATE_EXISTS = True
+    ACTIVATE = True
 
-    print('Event ID: {}'.format(context.event_id))
-    print('Event type: {}'.format(context.event_type))
+    # print('Event ID: {}'.format(context.event_id))
+    # print('Event type: {}'.format(context.event_type))
     print('Bucket: {}'.format(event['bucket']))
     print('File: {}'.format(event['name']))
-    print('Metageneration: {}'.format(event['metageneration']))
-    print('Created: {}'.format(event['timeCreated']))
-    print('Updated: {}'.format(event['updated']))
+    # print('Metageneration: {}'.format(event['metageneration']))
+    # print('Created: {}'.format(event['timeCreated']))
+    # print('Updated: {}'.format(event['updated']))
 
     fname = event['name']
     if DELETE_IF_DATE_EXISTS:
@@ -249,14 +249,14 @@ def gcs_function_hook(event, context):
 
     changes = preview(fname)
 
-    if os.environ['ACTIVATE'].capitalize() == 'TRUE':
+    if ACTIVATE:
         if VERBOSE:
             print("INFO: COMMITTING CHANGES TO BIG QUERY")
         commit(changes)
         print("Ok")
     else:
-        print("WARNING: COMMIT IS DISABLED!!! NO WRITES TO BIG QUERY")
+        print("WARNING: COMMIT DISABLED! NO WRITES TO BIG QUERY")
         for table_id in changes.keys():
-            print(f"TEST: WRITING ON TABLE: {table_id}")
+            print(f"TEST: TABLE: {table_id}")
             print(F"data: {changes[table_id]}")
 # [END functions_helloworld_storage]
