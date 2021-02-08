@@ -20,7 +20,7 @@ bucket = storage_client.get_bucket(BUCKET_NAME)
 def get_data(fname_with_date):
     """ Scan the configuration data based on the entered filename, if match, the corresponding config data is loaded
 
-    :param fname_with_date:
+    :param: fname_with_date:
     :return: dict with config data, or error if no match found.
     """
     regex_pattern_for_date = '\d{4}-?\d?-?\d?-?\d?\d?'
@@ -214,6 +214,7 @@ def push_to_bq(df, table_id, schema=None):
 
 
 def commit(change_list):
+
     for table_id in change_list.keys():
         push_to_bq(change_list[table_id]['data'], table_id, change_list[table_id]['bq_schema'])
 
