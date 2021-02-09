@@ -170,8 +170,8 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                                  {'name': 'ALL_DATA', 'type': 'INT64'},
                                                  {'name': 'CONSENT', 'type': 'INT64'},
                                                  {'name': 'CONSENT_PY', 'type': 'INT64'},
-                                                 {'name': 'LOCAL_USER_CONSENT', 'type': 'STRING'},
-                                                 {'name': 'DELTA_TARGET__ACHIEVEMENT_LOCAL', 'type': 'STRING'},
+                                                 {'name': 'LOCAL_USER_CONSENT', 'type': 'INT64'},
+                                                 {'name': 'DELTA_TARGET__ACHIEVEMENT_LOCAL', 'type': 'INT64'},
                                                  {'name': 'DATE', 'type': 'DATE'},
                                                  ]  # to automatically infer schema
                                    }

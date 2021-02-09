@@ -8,12 +8,23 @@ import os
 
 # configuration
 PROJECT_ID = 'bosch-dashboard-295910'
-BUCKET_NAME = 'file-uploader_vol'
+BUCKET_NAME = 'gs://file-uploader_vol'
 INPUT_FILES_DIR = 'file-templates'
 VERBOSE = True
 
 storage_client = storage.Client(PROJECT_ID)
 bucket = storage_client.get_bucket(BUCKET_NAME)
+
+
+def set_env(ENV='local'):
+    if ENV in ['local', 'GCP']:
+        if ENV == 'local':
+            return INPUT_FILES_DIR
+        elif ENV == 'GCP':
+            return os.path.join('gs://', BUCKET_NAME)
+    else:
+        print("ERR: WRONG ENVIRONMENT")
+        return False
 
 
 def get_data(fname_with_date):
@@ -34,8 +45,8 @@ def get_data(fname_with_date):
         Y = data_file_completa.year
         m = data_file_completa.month
         d = data_file_completa.day
-        data = {'index': file_cfg_index, 'Y': Y, 'm': m, 'd': d, 'iso8601': str(data_file_completa.date())}
-        return data
+
+        return {'iso8601': str(data_file_completa.date()), 'cfg': cfg[file_cfg_index]}
     except IndexError as e:
         print(f"ERR {e}: FILENAME {fname_with_date} DOES NOT MATCH EXISTING FILE PATTERNS.")
 
@@ -45,12 +56,6 @@ def list_blobs(bucket_name=BUCKET_NAME):
 
     # Note: Client.list_blobs requires at least package version 1.17.0.
     return [blob.name for blob in storage_client.list_blobs(bucket_name)]
-
-
-def get_raw_df(f, sheet_name=None) -> pd.DataFrame:
-    if not sheet_name:
-        sheet_name = list(f['tabs'].keys())[0]
-    return pd.read_excel(f"gs://file-uploader_vol/{f['name']}", sheet_name=sheet_name)
 
 
 def rename_cols_for_bq(df):
@@ -71,28 +76,29 @@ def available_tabs_per_file(fname):
         return xl.sheet_names
 
 
-def preview_local_template(fname):
+def preview_local_template(fname, ENV):
     """
     :param fname: string containing
     :return: dict. keys are the big query table names. values are the table contents.
     """
     change_list = {}
     data = get_data(fname)
-    index = data['index']
+    cfg_templo = data['cfg']
     iso = data['iso8601']
-    tabs = list(cfg[index]['tabs'].keys())
+    tabs = list(cfg_templo['tabs'].keys())
 
     for tab in tabs:
-        tables = list(cfg[index]['tabs'][tab]['tables'].keys())
+        tables = list(cfg_templo['tabs'][tab]['tables'].keys())
         for table in tables:
             change_list[table] = {}
-            usecols = cfg[index]['tabs'][tab]['tables'][table]['usecols']
-            header = cfg[index]['tabs'][tab]['tables'][table]['header']
 
-            cols_to_drop = cfg[index]['tabs'][tab]['tables'][table]['cols_to_drop']
-            cols_to_ffill = cfg[index]['tabs'][tab]['tables'][table]['cols_to_ffill']
-            from_row = cfg[index]['tabs'][tab]['tables'][table]['from_row']
-            to_row = cfg[index]['tabs'][tab]['tables'][table]['to_row']
+            usecols = cfg_templo['tabs'][tab]['tables'][table]['usecols']
+            header = cfg_templo['tabs'][tab]['tables'][table]['header']
+
+            cols_to_drop = cfg_templo['tabs'][tab]['tables'][table]['cols_to_drop']
+            cols_to_ffill = cfg_templo['tabs'][tab]['tables'][table]['cols_to_ffill']
+            from_row = cfg_templo['tabs'][tab]['tables'][table]['from_row']
+            to_row = cfg_templo['tabs'][tab]['tables'][table]['to_row']
 
             if not header:  # to match excel indexing in the configuration file
                 header = 1
@@ -122,7 +128,7 @@ def preview_local_template(fname):
                 df = df[from_row - 1:]
 
             change_list[table]['data'] = df
-            change_list[table]['bq_schema'] = cfg[index]['tabs'][tab]['tables'][table]['bq_schema']
+            change_list[table]['bq_schema'] = cfg_templo['tabs'][tab]['tables'][table]['bq_schema']
             print(f"FILE: `{fname}` - TAB: `{tab}` - TABLE: `{table}`")
             print("HEAD ==>")
             print(df.head(2).to_string())
