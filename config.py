@@ -333,6 +333,48 @@ config = {'#_Input_Additional_Impressions.xlsx':
                     }
                },
 
+          '#_Input_Sweetspot_Engagement.xlsx':  # the `#` is the placeholder for the DATE, must me in the same position as in the filename
+              {'#': '%Y%m',
+               'tabs':
+                   {'Tabelle1':
+                        {'tables':
+                             {'actual_engagement_rate':
+                                  {'usecols': 'C:H',  # None, o auto select them all
+                                   'header': 6,  # will take the first row as the header
+                                   'cols_to_drop': [],
+                                   'cols_to_ffill': [],
+                                   'from_row': 7,  # 0 to autoselect them all. same index as excel, 1-based
+                                   'to_row': 7,  # 0 to aoutselect them all. same index as excel, 1-based
+                                   'bq_schema': [{'name': 'WEBSITE_RETURNING_VISITORS', 'type': 'FLOAT64'},
+                                                    {'name': 'CTR_FOR_STANDALONE_NEWSLETTERS', 'type': 'FLOAT64'},
+                                                    {'name': 'INTERACTION_RATE_ON_FB', 'type': 'FLOAT64'},
+                                                    {'name': 'INTERACTION_RATE_ON_INSTAGRAM', 'type': 'FLOAT64'},
+                                                    {'name': 'YOUTUBE_VIEW_TIME_MIN_60_PERCENT', 'type': 'FLOAT64'},
+                                                    {'name': 'MOBILE_MAU_VS_INSTALLS', 'type': 'FLOAT64'},
+                                                    {'name': 'DATE', 'type': 'DATE'},]
+                                   },
+                              'target_achievement_rate':
+                                  {'usecols': 'C:I',
+                                   'header': 11,
+                                   'cols_to_drop': [],
+                                   'cols_to_ffill': [],
+                                   'from_row': 12,
+                                   'to_row': 12,
+                                   'bq_schema': [{'name': 'WEBSITE_RETURNING_VISITORS', 'type': 'FLOAT64'},
+                                                    {'name': 'CTR_FOR_STANDALONE_NEWSLETTERS', 'type': 'FLOAT64'},
+                                                    {'name': 'INTERACTION_RATE_ON_FB', 'type': 'FLOAT64'},
+                                                    {'name': 'INTERACTION_RATE_ON_INSTAGRAM', 'type': 'FLOAT64'},
+                                                    {'name': 'YOUTUBE_VIEW_TIME_MIN_60_PERCENT', 'type': 'FLOAT64'},
+                                                    {'name': 'MOBILE_MAU_VS_INSTALLS', 'type': 'FLOAT64'},
+                                                    {'name': 'ENGAGEMENT_TARGET_ACHIEVEMENT_RATE', 'type': 'FLOAT64'},
+                                                    {'name': 'DATE', 'type': 'DATE'}, ]
+                                   }
+                              }
+                         },
+
+                    }
+               },
+
           # ------- USE THIS AS TEMPLATE ----------
           '#<filename>.xlsx':  # the `#` is the placeholder for the DATE, must me in the same position as in the filename
               {'#': '%Y%m',
