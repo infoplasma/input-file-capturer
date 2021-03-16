@@ -212,9 +212,15 @@ def push_to_bq(df, table_id, schema=None):
 
 
 def commit(change_list):
-
     for table_id in change_list.keys():
         push_to_bq(change_list[table_id]['data'], table_id, change_list[table_id]['bq_schema'])
+
+
+def archive(f_list):
+    for f in f_list:
+        print(f"INFO: ARCHIVING FILE `{f}`")
+        os.rename(f'file-templates/{f}', f'file-templates/processed/{f}')
+    print("Ok")
 
 
 # [START functions_helloworld_storage]
@@ -231,8 +237,8 @@ def gcs_function_hook(event, context):
         None; the output is written to Stackdriver Logging
     """
 
-    DELETE_IF_DATE_EXISTS = True
-    ACTIVATE = True
+    DELETE_IF_DATE_EXISTS = False
+    ACTIVATE = False
 
     # print('Event ID: {}'.format(context.event_id))
     # print('Event type: {}'.format(context.event_type))
@@ -243,12 +249,12 @@ def gcs_function_hook(event, context):
     # print('Updated: {}'.format(event['updated']))
 
     fname = event['name']
-    if DELETE_IF_DATE_EXISTS:
-        delete_data_if_date_exists(fname)
 
     changes = preview(fname)
 
     if ACTIVATE:
+        if DELETE_IF_DATE_EXISTS:
+            delete_data_if_date_exists(fname)
         if VERBOSE:
             print("INFO: COMMITTING CHANGES TO BIG QUERY")
         commit(changes)
