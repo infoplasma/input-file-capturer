@@ -32,7 +32,7 @@ config = {'#_Input_Additional_Impressions.xlsx':
                                    'cols_to_drop': [],
                                    'cols_to_ffill': [],
                                    'from_row': 2,
-                                   'to_row': 0,
+                                   'to_row': 20,
                                    'bq_schema': [{'name': 'SALES_REGION', 'type': 'STRING'},
                                                  {'name': 'WEBSITE', 'type': 'STRING'},
                                                  {'name': 'COUNTRY', 'type': 'STRING'},
@@ -333,7 +333,7 @@ config = {'#_Input_Additional_Impressions.xlsx':
                     }
                },
 
-          '#_Input_Sweetspot_Engagement.xlsx':  # the `#` is the placeholder for the DATE, must me in the same position as in the filename
+          '#_Input_Bedrock_Engagement.xlsx':  # the `#` is the placeholder for the DATE, must me in the same position as in the filename
               {'#': '%Y%m',
                'tabs':
                    {'Tabelle1':

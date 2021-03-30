@@ -202,7 +202,6 @@ def preview(fname):
             change_list[table]['data'] = df
             change_list[table]['bq_schema'] = cfg[index]['tabs'][tab]['tables'][table]['bq_schema']
             print(f"FILE: `{fname}` - TAB: `{tab}` - TABLE: `{table}`")
-
     return change_list
 
 
