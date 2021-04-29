@@ -1,4 +1,5 @@
-from datetime import datetime
+from datetime import datetime, date
+import calendar
 from config import config as cfg
 from google.cloud import storage, bigquery
 import pandas as pd
@@ -29,12 +30,13 @@ def get_data(fname_with_date):
 
         date_format = cfg[file_cfg_index]['#']
 
-        data_file_completa = datetime.strptime(extracted_date, date_format)
+        d = datetime.strptime(extracted_date, date_format)
+        data_file_completa = date(d.year, d.month, calendar.monthrange(d.year, d.month)[-1])  # converte a ultimo giorno del mese
 
         Y = data_file_completa.year
         m = data_file_completa.month
         d = data_file_completa.day
-        data = {'index': file_cfg_index, 'Y': Y, 'm': m, 'd': d, 'iso8601': str(data_file_completa.date())}
+        data = {'index': file_cfg_index, 'Y': Y, 'm': m, 'd': d, 'iso8601': str(data_file_completa)}
         return data
     except IndexError as e:
         print(f"ERR {e}: FILENAME {fname_with_date} DOES NOT MATCH EXISTING FILE PATTERNS.")
